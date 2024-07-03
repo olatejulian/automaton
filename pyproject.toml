@@ -1,7 +1,7 @@
 [project]
-name = "mp3manager"
-version = "0.1.0"
-description = "Default template for PDM package"
+name = "automaton"
+version = "0.0.0"
+description = ""
 authors = [{ name = "olatejulian", email = "julian.lf.olate@gmail.com" }]
 dependencies = [
     "pytube>=15.0.0",
