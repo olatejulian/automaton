@@ -36,6 +36,7 @@ dev = [
 
 [tool.pdm.scripts]
 automaton = { call = "src.automaton.cli:cli" }
+mkbin = "pyinstaller -Fyn auto src/automaton/__main__.py"
 
 [tool.pylint.basic]
 # Naming style matching correct argument names.
