@@ -44,6 +44,8 @@ def rename_series_episodes(path: str) -> None:
     except Exception as e:
         logger.exception(e, stack_info=True)
 
+        sys.exit(1)
+
 
 @cli.command()
 def rename_subtitles(path: str) -> None:
