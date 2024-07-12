@@ -3,8 +3,8 @@ import pathlib
 import shutil
 
 
-def file_verify(file_path: str) -> bool:
-    return os.path.exists(file_path)
+def verify_path(path: str) -> bool:
+    return os.path.exists(path)
 
 
 def list_filenames(path: str) -> list[str]:
