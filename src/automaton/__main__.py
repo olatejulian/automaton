@@ -1,3 +1,3 @@
-from .cli import cli
+from automaton.cli import cli
 
 cli()
