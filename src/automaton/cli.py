@@ -1,8 +1,10 @@
 import logging
 import sys
+from typing import Optional
 
 from typer import Typer
 
+from .pdf import PDF, PdfMetaData
 from .series import get_season_episode, is_video_file, video_name_format
 from .utils import (
     directory_name,
@@ -41,6 +43,7 @@ def rename_series_episodes(path: str) -> None:
         else:
             raise FileNotFoundError(f"Directory not found: {path}")
 
+    # pylint: disable=broad-except
     except Exception as e:
         logger.exception(e, stack_info=True)
 
@@ -50,3 +53,13 @@ def rename_series_episodes(path: str) -> None:
 @cli.command()
 def rename_subtitles(path: str) -> None:
     raise NotImplementedError
+
+
+@cli.command()
+def rename_pdf_title(path: str, name: Optional[str] = None) -> None:
+    pdf = PDF(path)
+
+    if not name:
+        name = directory_name(path)
+
+    pdf.set_metadata(metadata=PdfMetaData(title=name))
