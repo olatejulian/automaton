@@ -8,6 +8,7 @@ dependencies = [
     "validators>=0.28.1",
     "typer>=0.12.3",
     "pyinstaller>=6.9.0",
+    "pypdf>=4.3.0",
 ]
 requires-python = "==3.12.*"
 readme = "README.md"
