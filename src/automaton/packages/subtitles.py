@@ -1,5 +1,7 @@
 import re
 
+DEFAULT_SUBTITLE_FILE_EXTENSION = ".srt"
+
 
 def get_language_locale(filename: str) -> str | None:
     match = re.search(r"\b([a-z]{2})_([A-Z]{2})\b", filename)
