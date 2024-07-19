@@ -212,6 +212,7 @@ disable = [
     "missing-class-docstring",
     "missing-function-docstring",
     "unrecognized-option",
+    "broad-except",
 ]
 
 [tool.pylint.method_args]
