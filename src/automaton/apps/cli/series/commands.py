@@ -1,5 +1,5 @@
-from automaton.packages import path as p
-from automaton.packages import series as s
+from automaton.modules import path as p
+from automaton.modules import series as s
 
 from . import types as t
 
