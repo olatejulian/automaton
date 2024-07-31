@@ -4,7 +4,7 @@ from typer import Typer
 from .. import common
 from . import commands
 
-series = Typer()
+series = Typer(name="series")
 
 
 @series.command()
