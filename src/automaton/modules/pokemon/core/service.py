@@ -10,13 +10,9 @@ class PokemonService:
     def add_from_csv(self, file_path: str):
         pokemon_matrix = Text.read_csv(file_path, drop_header=True)
 
-        pokemons = list(
-            map(
-                lambda pokemon: self.__pokedex.add(
-                    PokemonFactory.create_from_list(pokemon)
-                ),
-                pokemon_matrix,
-            )
+        pokemons = map(
+            PokemonFactory.create_from_list,
+            pokemon_matrix,
         )
 
         self.__pokedex.add_many(pokemons)
