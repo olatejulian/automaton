@@ -26,7 +26,14 @@ class Text:
                 yield line
 
     @classmethod
-    def read_csv(cls, csv_file_path: str, separator: str = ","):
-        return cls(csv_file_path).map(
+    def read_csv(
+        cls, csv_file_path: str, separator: str = ",", drop_header=False
+    ):
+        text = cls(csv_file_path).map(
             lambda line: [line.strip() for line in line.split(separator)]
         )
+
+        if drop_header:
+            next(text)
+
+        return text
