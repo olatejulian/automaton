@@ -1,9 +1,11 @@
+from typing import Any
+
 from .pokemon import Pokemon
 
 
 class PokemonFactory:
     @staticmethod
-    def create_from_list(values: list[str | int]) -> Pokemon:
+    def create_from_list(values: list[Any]) -> Pokemon:
         return Pokemon(
             dex_number=int(values[0]),
             name=str(values[1]),
