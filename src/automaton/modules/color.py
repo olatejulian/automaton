@@ -15,7 +15,7 @@ class Color:
             self.__blue = blue
 
         else:
-            raise ValueError
+            raise ValueError("All color values must be between 0 and 255.")
 
     def __repr__(self):
         return self.__color_text(
@@ -50,7 +50,7 @@ class Color:
 
     @staticmethod
     def __to_hexadecimal_string(red: float, green: float, blue: float) -> str:
-        return f"#{int(red):02x}{int(green):02x}{int(blue):02x}"
+        return f"#{round(red):02x}{round(green):02x}{round(blue):02x}".upper()
 
     @staticmethod
     def __to_rgb_string(red: float, green: float, blue: float) -> str:
@@ -76,6 +76,16 @@ class Color:
             int(hexadecimal_string[5:], 16),
         )
         return cls(red, green, blue)
+
+    @property
+    def rgb(self):
+        return self.__to_rgb_string(self.__red, self.__green, self.__blue)
+
+    @property
+    def hex(self):
+        return self.__to_hexadecimal_string(
+            self.__red, self.__green, self.__blue
+        )
 
     def get_colors(self) -> tuple[float, float, float]:
         return self.__red, self.__green, self.__blue
