@@ -23,6 +23,8 @@ def verify_path(path: str):
     if not os.path.exists(path):
         raise PathNotExistsException
 
+    return path
+
 
 def list_files(path: str):
     for file in os.listdir(path):
