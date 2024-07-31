@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import TypedDict
+from typing import Iterator, TypedDict
 
 from .pokemon import Pokemon
 
@@ -16,7 +16,7 @@ class PokeDex(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def add_many(self, pokemons: list[Pokemon]):
+    def add_many(self, pokemons: list[Pokemon] | Iterator[Pokemon]):
         raise NotImplementedError
 
     @abstractmethod
