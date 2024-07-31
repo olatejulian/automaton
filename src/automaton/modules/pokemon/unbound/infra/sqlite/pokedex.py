@@ -1,4 +1,5 @@
 import sqlite3
+from typing import Iterator
 
 from ....core import PokeDex, Pokemon, PokemonFactory, Query
 
@@ -66,13 +67,11 @@ class SqliteUnboundNationalPokeDex(PokeDex):
                 values,
             )
 
-    def add_many(self, pokemons: list[Pokemon]):
+    def add_many(self, pokemons: list[Pokemon] | Iterator[Pokemon]):
         with self.__connection as connection:
             cursor = connection.cursor()
 
-            values = list(
-                map(lambda pokemon: tuple(pokemon.values()), pokemons)
-            )
+            values = map(lambda pokemon: tuple(pokemon.values()), pokemons)
 
             cursor.executemany(
                 self.__insert_query__,
