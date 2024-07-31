@@ -1,11 +1,13 @@
 from typing import Callable, Iterator, TypeVar
 
+from ..modules import path as p
+
 T = TypeVar("T")
 
 
 class Text:
     def __init__(self, text_file_path: str):
-        self.__text_path = text_file_path
+        self.__text_path = p.verify_path(text_file_path)
 
     def __iter__(self):
         with open(
@@ -22,3 +24,9 @@ class Text:
         for line in self:
             if func(line):
                 yield line
+
+    @classmethod
+    def read_csv(cls, csv_file_path: str, separator: str = ","):
+        return cls(csv_file_path).map(
+            lambda line: [line.strip() for line in line.split(separator)]
+        )
