@@ -1,6 +1,6 @@
 from ...text import Text
-from .pokedex import PokeDex, Query
 from .factory import PokemonFactory
+from .pokedex import PokeDex, Query
 
 
 class PokemonService:
@@ -8,7 +8,7 @@ class PokemonService:
         self.__pokedex = pokedex
 
     def add_from_csv(self, file_path: str):
-        pokemon_matrix = Text.read_csv(file_path)
+        pokemon_matrix = Text.read_csv(file_path, drop_header=True)
 
         pokemons = list(
             map(
