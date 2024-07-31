@@ -1,7 +1,6 @@
 import sqlite3
-from typing import Any
 
-from ....core import PokeDex, Pokemon, Query
+from ....core import PokeDex, Pokemon, PokemonFactory, Query
 
 
 class SqliteUnboundNationalPokeDex(PokeDex):
@@ -44,22 +43,6 @@ class SqliteUnboundNationalPokeDex(PokeDex):
             base += f" limit {query['limit']}"
 
         return base
-
-    @staticmethod
-    def __build_pokemon(row: Any) -> Pokemon:
-        return {
-            "dex_number": int(row[0]),
-            "name": str(row[1]),
-            "type_01": str(row[2]),
-            "type_02": str(row[3]),
-            "hp": int(row[4]),
-            "attack": int(row[5]),
-            "defense": int(row[6]),
-            "sp_attack": int(row[7]),
-            "sp_defense": int(row[8]),
-            "speed": int(row[9]),
-            "total": int(row[10]),
-        }
 
     def __init__(self, connection: sqlite3.Connection):
         self.__connection = connection
@@ -104,4 +87,4 @@ class SqliteUnboundNationalPokeDex(PokeDex):
 
             rows = cursor.fetchall()
 
-            return list(map(self.__build_pokemon, rows))
+            return list(map(PokemonFactory.create_from_list, rows))
