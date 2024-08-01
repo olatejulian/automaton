@@ -8,6 +8,7 @@ from automaton.modules.pokemon import (
     PokemonService,
     SqliteUnboundNationalPokeDex,
 )
+from automaton.modules import path as p
 
 from ..commands import AddPokemonsFromCsv, GetPokemons
 from ..config import TableConfig
@@ -21,7 +22,9 @@ class Commands(TypedDict):
 class UnboundModule:
     app_name = "automaton/cli/pokemon"
     app_dir = Path(typer.get_app_dir(app_name))
-    db_path = str((app_dir / "pokemon.db").absolute())
+    db_path = p.create_path_if_not_exists(
+        str((app_dir / "pokemon.db").absolute())
+    )
     table_title = "Pokemon Unbound National PokeDex"
     table_config = TableConfig(title=table_title)
     sqlite_connection = sqlite3.connect(db_path)
