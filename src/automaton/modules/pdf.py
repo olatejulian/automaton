@@ -1,6 +1,10 @@
 from pypdf import DocumentInformation, PdfReader, PdfWriter
 
 
+def is_pdf_file(file_path: str) -> bool:
+    return file_path.endswith(".pdf")
+
+
 class PdfMetaData:
     def __init__(
         self,
