@@ -16,7 +16,7 @@ def generator_handler(
 ):
     result_generator = map(mapper, generator) if mapper else generator
 
-    return [result for result in result_generator if result]
+    return list(filter(None, result_generator))
 
 
 def try_run(func: Callable[..., Any], **kwargs):
