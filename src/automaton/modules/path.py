@@ -68,3 +68,10 @@ def get_file_name(path: str):
         raise NotAFileException
 
     return Path(path).stem
+
+
+def create_path_if_not_exists(path: str):
+    if not os.path.exists(path):
+        os.makedirs(path, exist_ok=True)
+
+    return path
