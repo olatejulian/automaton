@@ -39,7 +39,7 @@ POKEMON_TYPES_COLORS = {
 }
 
 
-class TableConfig:
+class PokedexTableConfig:
     columns = [
         "dex_number",
         "name",

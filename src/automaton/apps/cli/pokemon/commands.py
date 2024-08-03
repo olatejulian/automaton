@@ -1,7 +1,7 @@
 from automaton.modules.pokemon import Pokemon, PokemonService, Query
 
 from ..table import ConsoleTable
-from .config import POKEMON_TYPES_COLORS, TableConfig
+from .config import POKEMON_TYPES_COLORS, PokedexTableConfig
 
 
 class AddPokemonsFromCsv:
@@ -45,7 +45,7 @@ class GetPokemons:
 
         return attributes
 
-    def __init__(self, service: PokemonService, config: TableConfig):
+    def __init__(self, service: PokemonService, config: PokedexTableConfig):
         self.__service = service
         self.__config = config
 
