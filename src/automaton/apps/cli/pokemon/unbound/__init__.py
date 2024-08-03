@@ -1,4 +1,5 @@
 from .cli import unbound_cli
-from .module import UnboundModule
+from .config import UnboundTableConfig
+from .container import build_unbound_container
 
-__all__ = ["UnboundModule", "unbound_cli"]
+__all__ = ["UnboundTableConfig", "unbound_cli", "build_unbound_container"]
