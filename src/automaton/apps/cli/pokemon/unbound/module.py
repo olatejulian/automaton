@@ -1,37 +1,36 @@
 import sqlite3
-from pathlib import Path
-from typing import TypedDict
 
-import typer
+from lagom import Container
 
 from automaton.modules.pokemon import (
+    PokeDex,
     PokemonService,
     SqliteUnboundNationalPokeDex,
 )
-from automaton.modules import path as p
 
 from ..commands import AddPokemonsFromCsv, GetPokemons
-from ..config import TableConfig
+from ..config import PokedexTableConfig
+from .config import UnboundTableConfig
 
 
-class Commands(TypedDict):
-    add_pokemons_from_csv: AddPokemonsFromCsv
-    get_pokemons: GetPokemons
+def build_unbound_container(container: Container | None = None) -> Container:
+    if not container:
+        container = Container()
 
-
-class UnboundModule:
-    app_name = "automaton/cli/pokemon"
-    app_dir = Path(typer.get_app_dir(app_name))
-    db_path = p.create_path_if_not_exists(
-        str((app_dir / "pokemon.db").absolute())
+    container[PokeDex] = lambda c: SqliteUnboundNationalPokeDex(
+        c[sqlite3.Connection]
     )
-    table_title = "Pokemon Unbound National PokeDex"
-    table_config = TableConfig(title=table_title)
-    sqlite_connection = sqlite3.connect(db_path)
-    pokedex = SqliteUnboundNationalPokeDex(sqlite_connection)
-    service = PokemonService(pokedex)
 
-    commands: Commands = {
-        "add_pokemons_from_csv": AddPokemonsFromCsv(service),
-        "get_pokemons": GetPokemons(service, table_config),
-    }
+    container[PokemonService] = lambda c: PokemonService(c[PokeDex])
+
+    container[AddPokemonsFromCsv] = lambda c: AddPokemonsFromCsv(
+        c[PokemonService]
+    )
+
+    container[PokedexTableConfig] = UnboundTableConfig()
+
+    container[GetPokemons] = lambda c: GetPokemons(
+        c[PokemonService], c[PokedexTableConfig]
+    )
+
+    return container
