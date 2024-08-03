@@ -1,3 +1,7 @@
+from pathlib import Path
+
+import typer
+
 BUG = "#A6B91A"
 DARK = "#705746"
 DRAGON = "#6F35FC"
@@ -53,6 +57,10 @@ class PokedexTableConfig:
         "speed",
         "total",
     ]
+    title: str
 
-    def __init__(self, title: str):
-        self.title = title
+
+class PokemonCliConfig:
+    app_name = "automaton/cli/pokemon"
+    app_dir = str(Path(typer.get_app_dir(app_name)).absolute())
+    sqlite_db_path = f"{app_dir}/pokemon.db"
