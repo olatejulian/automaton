@@ -6,9 +6,7 @@ from typing import Any
 from .types import Handler, Handlers
 
 
-class _HandlerRegister:
-    __handlers: Handlers
-
+class HandlerRegister:
     @staticmethod
     def __pascal_to_snake(string: str) -> str:
         string = re.sub(r"(?<=[a-z0-9])([A-Z])", r"_\1", string)
@@ -20,9 +18,9 @@ class _HandlerRegister:
         return cls.__pascal_to_snake(type_.__name__)
 
     def __init__(self):
-        self.__handlers = {}
+        self.__handlers: Handlers = {}
 
-    def __add__(self, other: _HandlerRegister):
+    def __add__(self, other: HandlerRegister):
         self.__handlers.update(other.handlers)
 
         return self
@@ -31,7 +29,7 @@ class _HandlerRegister:
     def handlers(self):
         return self.__handlers
 
-    def register_handler(self, handler: Handler, name: str | None = None):
+    def register(self, handler: Handler, name: str | None = None):
         handler_type = type(handler)
         handler_name = name if name else self.__type_name(handler_type)
         handler_function = handler
@@ -41,6 +39,8 @@ class _HandlerRegister:
             "handler": handler_function,
             "handler_type": handler_type,
         }
+
+        print()
 
     def unregister_handler(self, handler_id: str | type[Any]):
         if isinstance(handler_id, type):
@@ -54,19 +54,19 @@ class _HandlerRegister:
     ):
         if isinstance(handlers, dict):
             for name, handler in handlers.items():
-                self.register_handler(name=name, handler=handler)
+                self.register(name=name, handler=handler)
 
         elif isinstance(handlers, list):
             for item in handlers:
                 if isinstance(item, tuple):
                     name, handler = item
 
-                    self.register_handler(handler=handler, name=name)
+                    self.register(handler=handler, name=name)
 
                 else:
                     handler = item
 
-                    self.register_handler(handler)
+                    self.register(handler)
 
     def get_handler(self, handler_id: str | type[Any]):
         if isinstance(handler_id, type):

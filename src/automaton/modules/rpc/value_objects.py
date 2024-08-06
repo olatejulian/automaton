@@ -1,5 +1,7 @@
 from typing import Any
 
+from .types import RpcRequestData, RpcResponseData
+
 
 class Host:
     @staticmethod
@@ -31,7 +33,7 @@ class Port:
 class RpcRequest:
     @staticmethod
     def __validate__(
-        handler_id: str | type[Any],
+        handler_id: str,
         args: list[Any] | tuple[Any] | None,
         kwargs: dict[str, Any] | None,
     ):
@@ -42,13 +44,23 @@ class RpcRequest:
 
     def __init__(
         self,
-        handler_id: str | type[Any],
+        handler_id: str,
         args: list[Any] | tuple[Any] | None = None,
         kwargs: dict[str, Any] | None = None,
     ):
         self.handler_id, self.args, self.kwargs = self.__validate__(
             handler_id, args, kwargs
         )
+
+    @property
+    def to_dict(self):
+        request_data = RpcRequestData(
+            handler_id=self.handler_id,
+            args=self.args,
+            kwargs=self.kwargs,
+        )
+
+        return request_data
 
 
 class RpcResponse:
@@ -58,3 +70,7 @@ class RpcResponse:
 
     def __init__(self, data: Any):
         self.data = self.__validate__(data)
+
+    @property
+    def do_dict(self):
+        return RpcResponseData(data=self.data)

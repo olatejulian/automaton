@@ -11,14 +11,18 @@ class RpcClient:
         self,
         host: str,
         port: int,
+        buff_size: int = 1024,
         serializer: RpcClientSerializer = JsonRpcClientSerializer(),
     ):
+        self.__buff_size = buff_size
         self.__address = str(Host(host)), int(Port(port))
         self.__serializer = serializer
 
     def __getattr__(self, name: str):
         def call(*args, **kwargs):
-            self.__call(RpcRequest(name, args, kwargs))
+            response = self.__call(RpcRequest(name, args, kwargs))
+
+            return response
 
         self.__setattr__(name, call)
 
@@ -29,7 +33,7 @@ class RpcClient:
 
         self.__socket.sendall(encoded_request)
 
-        encoded_response = self.__socket.recv(1024)
+        encoded_response = self.__socket.recv(self.__buff_size)
 
         response = self.__serializer.decode(encoded_response)
 
